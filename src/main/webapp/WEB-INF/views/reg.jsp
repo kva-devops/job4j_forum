@@ -10,7 +10,10 @@
     <title>Регистрация нового пользователя</title>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container mt-3">
+    <div class="row">
+        <h4>Форум</h4>
+    </div>
     <div class="row">
         <div class="col-4">
             <h2>Регистрация нового пользователя</h2>
@@ -38,7 +41,7 @@
                 <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
             </form>
             <div class="mb-3">
-                <a href="<c:url value='/login'/> ">Войти</a>
+                <a href="<c:url value='/login'/> ">Войти</a>  | <a href="<c:url value='/index'/>">На Главную</a>
             </div>
         </div>
     </div>

@@ -11,6 +11,9 @@ import ru.job4j.forum.model.Post;
 import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.PostService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class IndexControl {
 
@@ -32,7 +35,9 @@ public class IndexControl {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Post post) {
+    public String save(@ModelAttribute Post post, HttpServletRequest request) {
+        User buff = (User) request.getSession().getAttribute("user");
+        post.setAuthor(buff);
         postService.addPostToStore(post);
         return "redirect:/";
     }
@@ -67,14 +72,31 @@ public class IndexControl {
     @PostMapping("/login")
     public String loginCheck(@RequestParam("email") String email,
                              @RequestParam("password") String password,
-                             Model model) {
+                             HttpServletRequest request, Model model) {
         User rsl = postService.findUserByEmail(email);
-        if (password.equals(rsl.getPassword())) {
-            model.addAttribute("user", rsl);
-            System.out.println("find user: " + rsl.getName());
-            return "index";
+        String errorMessage;
+        if (rsl == null) {
+            errorMessage = "Пользователь с таким именем не существует! Зарегистрируйтесь";
+            model.addAttribute("errorMessage", errorMessage);
+            return "login";
         }
-        return "redirect:/login";
+        if (password.equals(rsl.getPassword())) {
+            HttpSession sc = request.getSession();
+            sc.setAttribute("user", rsl);
+            return "redirect:/";
+        } else if (!password.equals(rsl.getPassword())) {
+            errorMessage = "Неверный пароль!";
+            model.addAttribute("errorMessage", errorMessage);
+            return "login";
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "redirect:/";
     }
 
     @GetMapping("/post")

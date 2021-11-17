@@ -26,12 +26,12 @@
                     <i class="nav-link"><c:out value="${user.name}"/></i>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Выйти</a>
+                    <a class="nav-link" href="<c:url value='/create'/>">Добавить новую тему</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value='/logout'/>">Выйти</a>
                 </li>
             </c:if>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value='/create'/>">Добавить новую тему</a>
-            </li>
         </ul>
     </div>
     <div class="row">
@@ -56,9 +56,16 @@
                     <td>
                         <p>Автор: <c:out value="${post.author.name}" /></p>
                     </td>
-                    <td>
-                        <a href="<c:out value='/update?id=${post.id}'/>">Редактировать</a>
-                    </td>
+                    <c:if test="${post.author.id == user.id}">
+                        <td>
+                            <a href="<c:out value='/update?id=${post.id}'/>">Редактировать</a>
+                        </td>
+                    </c:if>
+                    <c:if test="${post.author.id != user.id}">
+                        <td>
+
+                        </td>
+                    </c:if>
                 </tr>
             </c:forEach>
             </tbody>

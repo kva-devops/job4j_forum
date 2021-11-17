@@ -10,7 +10,22 @@
     <title>Редактирование темы</title>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container mt-3">
+    <div class="row">
+        <h4>Форум</h4>
+    </div>
+    <div class="row border bg-light">
+        <ul class="nav">
+            <c:if test="${user != null}">
+                <li class="nav-item">
+                    <i class="nav-link"><c:out value="${user.name}"/></i>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value='/logout'/>">Выйти</a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
     <div class="row">
         <h2>Редактирование темы</h2>
         <div class="col-6">
@@ -22,6 +37,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </form>
+            <div class="mb-3">
+                <a href="<c:url value='/index'/>">Отмена</a>
+            </div>
         </div>
     </div>
 </div>

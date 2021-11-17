@@ -11,21 +11,27 @@
 </head>
 <body>
 <div class="container mt-3">
+    <div class="row">
+        <h4>Форум</h4>
+    </div>
     <div class="row border bg-light">
         <ul class="nav">
-                        <c:if test="${user == null}">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/login">Войти</a>
-                            </li>
-                        </c:if>
-                        <c:if test="${user != null}">
-                            <li class="nav-item">
-                                <i class="nav-link"><c:out value="${user.name}"/></i>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">Выйти</a>
-                            </li>
-                        </c:if>
+            <c:if test="${user == null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Войти</a>
+                </li>
+            </c:if>
+            <c:if test="${user != null}">
+                <li class="nav-item">
+                    <i class="nav-link"><c:out value="${user.name}"/></i>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value='/create'/>">Добавить новую тему</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value='/logout'/>">Выйти</a>
+                </li>
+            </c:if>
         </ul>
     </div>
     <div class="row">
