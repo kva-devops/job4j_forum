@@ -2,43 +2,41 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Post;
-import ru.job4j.forum.repository.PostMem;
+import ru.job4j.forum.repository.PostRepository;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class PostService {
 
-    private final PostMem postStore;
+    private final PostRepository postStore;
 
-    public PostService() {
-        this.postStore = new PostMem();
+    public PostService(PostRepository postStore) {
+        this.postStore = postStore;
     }
 
     public Collection<Post> getAll() {
-        return postStore.getPosts();
+        List<Post> rsl = new ArrayList<>();
+        postStore.findAll().forEach(rsl::add);
+        return rsl;
     }
 
     public void addPostToStore(Post post) {
-        if (postStore.checkContainPostIntoMap(post.getId())) {
-            postStore.updatePost(post);
+        if (post.getId() != 0) {
+            Post buff = findById(post.getId());
+            buff.setName(post.getName());
+            postStore.save(buff);
         } else {
-            postStore.createPost(post);
+            post.setCreated(Calendar.getInstance());
+            postStore.save(post);
         }
     }
 
     public Post findById(int id) {
-        Post rsl = null;
-        for (Post elem : postStore.getPosts()) {
-            if (elem.getId() == id) {
-                rsl = elem;
-            }
-        }
-        return rsl;
-    }
-
-    public Post findPostById(String id) {
-        return postStore.findPostById(id);
+        return postStore.findById(id).get();
     }
 
 }

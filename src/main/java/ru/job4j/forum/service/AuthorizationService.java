@@ -2,21 +2,22 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.User;
-import ru.job4j.forum.repository.UserMem;
+import ru.job4j.forum.repository.UserRepository;
 
 @Service
 public class AuthorizationService {
 
-    private static final UserMem USERS = new UserMem();
+    private static UserRepository users;
 
-    public AuthorizationService() {
+    public AuthorizationService(UserRepository users) {
+        AuthorizationService.users = users;
     }
 
     public static User createUser(User user) {
-        return USERS.createUser(user);
+        return users.save(user);
     }
 
     public static User findUserByEmail(String email) {
-        return USERS.findUserByEmail(email);
+        return users.findUserByEmail(email);
     }
 }

@@ -1,6 +1,5 @@
 package ru.job4j.forum.control;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +48,7 @@ public class IndexControl {
 
     @GetMapping("/post")
     public String loadPost(@RequestParam("id") String id, Model model) {
-        model.addAttribute("post", postService.findPostById(id));
+        model.addAttribute("post", postService.findById(Integer.parseInt(id)));
         return "post";
     }
 }

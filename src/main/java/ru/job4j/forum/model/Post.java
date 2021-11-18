@@ -2,12 +2,17 @@ package ru.job4j.forum.model;
 
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Objects;
 
 @Component
+@Entity
+@Table(name = "posts")
 public class Post {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -16,6 +21,8 @@ public class Post {
 
     private Calendar created;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User author;
 
     public int getId() {

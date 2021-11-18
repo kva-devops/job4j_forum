@@ -39,6 +39,10 @@
             <thead>
             <tr>
                 <th scope="col">Тема</th>
+                <th scope="col">Содержание</th>
+                <th scope="col">Время и дата создания</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Редактирование</th>
             </tr>
             </thead>
             <tbody>
@@ -63,7 +67,7 @@
                     </c:if>
                     <c:if test="${post.author.id != user.id}">
                         <td>
-
+                            <p>Недоступно</p>
                         </td>
                     </c:if>
                 </tr>
