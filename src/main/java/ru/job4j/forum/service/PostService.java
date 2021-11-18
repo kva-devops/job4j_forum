@@ -2,9 +2,7 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Post;
-import ru.job4j.forum.model.User;
 import ru.job4j.forum.repository.PostMem;
-import ru.job4j.forum.repository.UserMem;
 
 import java.util.Collection;
 
@@ -13,11 +11,8 @@ public class PostService {
 
     private final PostMem postStore;
 
-    private final UserMem users;
-
     public PostService() {
         this.postStore = new PostMem();
-        this.users = new UserMem();
     }
 
     public Collection<Post> getAll() {
@@ -40,14 +35,6 @@ public class PostService {
             }
         }
         return rsl;
-    }
-
-    public User createUser(User user) {
-        return users.createUser(user);
-    }
-
-    public User findUserByEmail(String email) {
-        return users.findUserByEmail(email);
     }
 
     public Post findPostById(String id) {
