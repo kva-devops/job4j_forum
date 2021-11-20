@@ -24,9 +24,9 @@
             </c:if>
             <form name='login' action="<c:url value='/login'/>" method='POST'>
                 <div class="mb-3">
-                    <label for="emailIdForm" class="form-label">Email пользователя</label>
-                    <input type="text" class="form-control" id="emailIdForm" name="email">
-                    <div id="emailHelp" class="form-text">Введите email</div>
+                    <label for="nameIdForm" class="form-label">Имя пользователя</label>
+                    <input type="text" class="form-control" id="nameIdForm" name="name">
+                    <div id="nameHelp" class="form-text">Введите имя</div>
                 </div>
                 <div class="mb-3">
                     <label for="passwordIdForm" class="form-label">Пароль</label>
@@ -34,6 +34,7 @@
                     <div id="passwordHelp" class="form-text">Введите пароль</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Войти</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             </form>
             <div class="mb-3">
                 <a href="<c:url value='/reg'/> ">Регистрация</a> | <a href="<c:url value='/index'/>">На Главную</a>

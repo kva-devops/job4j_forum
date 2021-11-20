@@ -20,6 +20,12 @@ public class User {
 
     private String password;
 
+    private boolean enabled;
+
+    @ManyToOne
+    @JoinColumn(name = "authority_id")
+    private Authority authority;
+
     public int getId() {
         return id;
     }
@@ -52,6 +58,22 @@ public class User {
         this.password = password;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -61,14 +83,11 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return id == user.id
-                && Objects.equals(name, user.name)
-                && Objects.equals(email, user.email)
-                && Objects.equals(password, user.password);
+        return id == user.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, password);
+        return Objects.hash(id);
     }
 }
