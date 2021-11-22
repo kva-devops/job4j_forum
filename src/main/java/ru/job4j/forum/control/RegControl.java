@@ -27,7 +27,6 @@ public class RegControl {
 
     @PostMapping("/reg")
     public String regSave(@ModelAttribute User user, Model model) {
-        System.out.println(encoder.encode(user.getPassword()));
         user.setEnabled(true);
         user.setPassword(encoder.encode(user.getPassword()));
         user.setAuthority(AuthorizationService.findByAuthority("ROLE_USER"));

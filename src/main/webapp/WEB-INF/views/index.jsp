@@ -23,7 +23,7 @@
             </c:if>
             <c:if test="${user != null}">
                 <li class="nav-item">
-                    <i class="nav-link"><c:out value="${user.name}"/></i>
+                    <i class="nav-link"><c:out value="${user.username}"/></i>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value='/create'/>">Добавить новую тему</a>
@@ -58,14 +58,14 @@
                         <c:out value="${post.created.time.toLocaleString()}" />
                     </td>
                     <td>
-                        <p>Автор: <c:out value="${post.author.name}" /></p>
+                        <p>Автор: <c:out value="${post.user.username}" /></p>
                     </td>
-                    <c:if test="${post.author.id == user.id}">
+                    <c:if test="${post.user.id == user.id}">
                         <td>
                             <a href="<c:out value='/update?id=${post.id}'/>">Редактировать</a>
                         </td>
                     </c:if>
-                    <c:if test="${post.author.id != user.id}">
+                    <c:if test="${post.user.id != user.id}">
                         <td>
                             <p>Недоступно</p>
                         </td>

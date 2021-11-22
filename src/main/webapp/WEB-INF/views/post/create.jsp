@@ -18,7 +18,7 @@
         <ul class="nav">
             <c:if test="${user != null}">
                 <li class="nav-item">
-                    <i class="nav-link"><c:out value="${user.name}"/></i>
+                    <i class="nav-link"><c:out value="${user.username}"/></i>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value='/logout'/>">Выйти</a>

@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Qualifier("dataSource")
@@ -33,13 +33,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.jdbcAuthentication().dataSource(dataSource)
                     .usersByUsernameQuery(
-                            "select name, password, enabled "
+                            "select username, password, enabled "
                                     + "from users "
-                                    + "where name = ?")
+                                    + "where username = ?")
                     .authoritiesByUsernameQuery(
-                            "select u.name, a.authority "
+                            "select u.username, a.authority "
                                     + "from authorities as a, users as u "
-                                    + "where u.name = ? and u.authority_id = a.id");
+                                    + "where u.username = ? and u.authority_id = a.id");
     }
 
     @Override

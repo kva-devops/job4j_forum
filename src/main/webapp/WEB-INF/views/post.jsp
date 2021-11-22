@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="ru">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
@@ -23,7 +24,7 @@
             </c:if>
             <c:if test="${user != null}">
                 <li class="nav-item">
-                    <i class="nav-link"><c:out value="${user.name}"/></i>
+                    <i class="nav-link"><c:out value="${user.username}"/></i>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value='/create'/>">Добавить новую тему</a>
@@ -45,7 +46,30 @@
             <p>Дата создания: <c:out value="${post.created.time.toLocaleString()}"/></p>
         </div>
         <div class="mb-3">
-            <p>Автор: <c:out value="${post.author.name}"/></p>
+            <p>Автор: <c:out value="${post.user.username}"/></p>
+        </div>
+        <div class="mb-3">
+            <c:forEach items="${post.comments}" var="comment">
+                <div class="card-content">
+                    <p>
+                        <strong>${comment}</strong>
+                        <c:out value="${comment.created.time.toLocaleString()}"/>
+                    </p>
+                    <p>
+                        ${comment.description}
+                    </p>
+                </div>
+            </c:forEach>
+        </div>
+        <div class="mb-3">
+            <form name="comment" action="<c:url value='/comment/save'/> " method="POST">
+                <div class="mb-3">
+                    <label for="commentAddId" class="form-label">Новое сообщение</label>
+                    <input hidden name="post.id" value="${post.id}">
+                    <input type="text" class="form-control" id="commentAddId" name="description" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
         </div>
     </div>
     <div class="row">

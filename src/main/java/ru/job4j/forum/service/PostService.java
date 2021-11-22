@@ -36,7 +36,6 @@ public class PostService {
     }
 
     public Post findById(int id) {
-        return postStore.findById(id).get();
+        return postStore.findById(id);
     }
-
 }

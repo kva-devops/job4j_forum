@@ -24,9 +24,9 @@
             </c:if>
             <form name='login' action="<c:url value='/reg'/>" method='POST'>
                 <div class="mb-3">
-                    <label for="nameIdForm" class="form-label">Имя пользователя</label>
-                    <input type="text" class="form-control" id="nameIdForm" name="name">
-                    <div id="nameHelp" class="form-text">Введите имя</div>
+                    <label for="usernameIdForm" class="form-label">Имя пользователя</label>
+                    <input type="text" class="form-control" id="usernameIdForm" name="username">
+                    <div id="usernameHelp" class="form-text">Введите имя</div>
                 </div>
                 <div class="mb-3">
                     <label for="emailIdForm" class="form-label">Email пользователя</label>

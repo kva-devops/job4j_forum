@@ -24,12 +24,11 @@ public class AuthorizationService {
         return users.save(user);
     }
 
-    public static User findUserByEmail(String email) {
-        return users.findUserByEmail(email);
-    }
-
     public static Authority findByAuthority(String authority) {
         return authorityRepository.findByAuthority(authority);
     }
 
+    public static User findUserByUsername(String username) {
+        return users.findByUsername(username);
+    }
 }
