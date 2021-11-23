@@ -49,10 +49,10 @@
             <p>Автор: <c:out value="${post.user.username}"/></p>
         </div>
         <div class="mb-3">
-            <c:forEach items="${post.comments}" var="comment">
+            <c:forEach items="${comments}" var="comment">
                 <div class="card-content">
                     <p>
-                        <strong>${comment}</strong>
+                        <strong>${comment.user.username}</strong>
                         <c:out value="${comment.created.time.toLocaleString()}"/>
                     </p>
                     <p>

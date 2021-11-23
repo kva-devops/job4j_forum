@@ -9,10 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.job4j.forum.model.Comment;
 import ru.job4j.forum.model.Post;
 import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.AuthorizationService;
+import ru.job4j.forum.service.CommentService;
 import ru.job4j.forum.service.PostService;
+
+import java.util.Calendar;
+import java.util.List;
 
 @Controller
 public class IndexControl {
@@ -21,8 +27,11 @@ public class IndexControl {
 
     private final PostService postService;
 
-    public IndexControl(PostService postService) {
+    private final CommentService commentService;
+
+    public IndexControl(PostService postService, CommentService commentService) {
         this.postService = postService;
+        this.commentService = commentService;
     }
 
     @GetMapping({"/", "/index"})
@@ -54,10 +63,23 @@ public class IndexControl {
         return "post/update";
     }
 
+    @PostMapping("/comment/save")
+    public String saveComment(@ModelAttribute Comment comment, RedirectAttributes attributes) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User buff = AuthorizationService.findUserByUsername(username);
+        comment.setUser(buff);
+        comment.setCreated(Calendar.getInstance());
+        commentService.save(comment);
+        attributes.addAttribute("id", comment.getPost().getId());
+        return "redirect:/post";
+    }
+
     @GetMapping("/post")
     public String loadPost(@RequestParam("id") String id, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User buff = AuthorizationService.findUserByUsername(username);
+        List<Comment> comments = commentService.findAllCommentsByPostId(Integer.parseInt(id));
+        model.addAttribute("comments", comments);
         model.addAttribute("user", buff);
         model.addAttribute("post", postService.findById(Integer.parseInt(id)));
         return "post";
