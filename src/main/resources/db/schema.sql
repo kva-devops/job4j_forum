@@ -3,9 +3,6 @@ create table authorities (
     authority varchar (50) not null unique
 );
 
-insert into authorities (authority) values ('ROLE_USER');
-insert into authorities (authority) values ('ROLE_ADMIN');
-
 create table users (
     id serial primary key,
     username varchar (50) not null unique,
@@ -14,10 +11,6 @@ create table users (
     enabled boolean default true,
     authority_id int not null references authorities(id)
 );
-
-insert into users (username, email, password, enabled, authority_id)
-values ('root', 'admin@admin.ru', '$2a$10$kTqGA646qzfySH6VoeVmO.mUKnliWeguseDTXaCSQjm2dInYv0LQ6',
-true, (select id from authorities where authority = 'ROLE_ADMIN'));
 
 create table posts (
     id serial primary key,
