@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 import javax.sql.DataSource;
 
+
 @SpringBootApplication
 public class Main extends SpringBootServletInitializer {
 
