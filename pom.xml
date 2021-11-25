@@ -21,56 +21,27 @@
     <spring.version>5.2.7.RELEASE</spring.version>
   </properties>
 
-  <profiles>
-    <profile>
-      <id>test</id>
-      <properties>
-        <db.url>jdbc:h2:${basedir}/testdb:MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE</db.url>
-        <db.username></db.username>
-        <db.password></db.password>
-        <db.driver>org.h2.Driver</db.driver>
-      </properties>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-    </profile>
-    <profile>
-      <id>production</id>
-      <properties>
-        <db.url>jdbc:postgresql://127.0.0.1:5432/forum</db.url>
-        <db.username>postgres</db.username>
-        <db.password>password</db.password>
-        <db.driver>org.postgresql.Driver</db.driver>
-      </properties>
-    </profile>
-  </profiles>
-
   <dependencies>
-
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.2.12</version>
     </dependency>
-
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
     </dependency>
-
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-dbcp2</artifactId>
       <version>2.7.0</version>
     </dependency>
-
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -102,11 +73,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-taglibs</artifactId>
-      <version>5.3.8.RELEASE</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
@@ -130,28 +96,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.liquibase</groupId>
-        <artifactId>liquibase-maven-plugin</artifactId>
-        <version>3.6.2</version>
-        <configuration>
-          <changeLogFile>${basedir}/src/main/resources/liquibase-changeLog.xml</changeLogFile>
-          <url>${db.url}</url>
-          <driver>${db.driver}</driver>
-          <username>${db.username}</username>
-          <password>${db.password}</password>
-          <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>clearCheckSums</goal>
-              <goal>update</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
