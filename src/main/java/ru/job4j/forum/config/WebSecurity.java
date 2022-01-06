@@ -21,9 +21,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
