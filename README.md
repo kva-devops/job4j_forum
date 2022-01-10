@@ -18,6 +18,13 @@ JDK14, Maven, Spring Boot, PostgreSQL
 4. При необходимости отредактировать порты, используемые приложением в файле docker-compose.yml
 5. Запустить приложение командой: "docker-compose up"
 
+## Запуск в кластере K8s
+Файлы конфигурации *.yml находятся в корне проекта, в директории k8s
+1. Создаем Secret: "kubectl apply -f postgresdb-secret.yml"
+2. Создаем ConfigMap: "kubectl apply -f postgresdb-configmap.yml"
+3. Создаем Deployment для БД: "kubectl apply -f postgresdb-deployment.yml"
+4. Создаем Deployment для Spring Boot: "kubectl apply -f spring-deployment.yml"
+
 ## Как пользоваться
 При старте приложения необходимо ввести логин и пароль или зарегистрироваться.
 ![loginStart](images/Selection_138.png)
