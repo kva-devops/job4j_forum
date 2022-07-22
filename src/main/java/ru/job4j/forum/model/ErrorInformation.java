@@ -20,13 +20,13 @@ public class ErrorInformation {
     private final String anchor;
 
     public JsonNode getError() {
-        HashMap<String, Object> errorMap = new HashMap<String, Object>() {{
-            put("error", new HashMap<String, Object>() {{
+        HashMap<String, Object> errorMap = new HashMap<String, Object>() { {
+            put("error", new HashMap<String, Object>() { {
                 put("shortMessage", shortMessage);
                 put("longMessage", longMessage);
                 put("anchor", anchor);
-            }});
-        }};
+            } });
+        } };
         ObjectMapper mapper = new ObjectMapper();
         return mapper.valueToTree(errorMap);
     }
