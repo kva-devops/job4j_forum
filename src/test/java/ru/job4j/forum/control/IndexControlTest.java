@@ -87,7 +87,7 @@ public class IndexControlTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
         ArgumentCaptor<Post> argumentCaptor = ArgumentCaptor.forClass(Post.class);
-        verify(postService).addPostToStore(argumentCaptor.capture());
+        verify(postService).addPost(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue().getName(), is("name 1"));
         assertThat(argumentCaptor.getValue().getDescription(), is("some description 1"));
     }

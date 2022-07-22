@@ -3,7 +3,16 @@ package ru.job4j.forum.repository;
 import org.springframework.data.repository.CrudRepository;
 import ru.job4j.forum.model.Authority;
 
-public interface AuthorityRepository extends CrudRepository<Authority, Integer> {
+import java.util.Optional;
 
-    Authority findByAuthority(String authority);
+/**
+ * DAO interface for Authority models
+ */
+public interface AuthorityRepository extends CrudRepository<Authority, Integer> {
+    /**
+     * Finding Authority object by name of authority
+     * @param authority - name of authority
+     * @return Authority object
+     */
+    Optional<Authority> findByAuthority(String authority);
 }

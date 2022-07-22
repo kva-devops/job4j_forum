@@ -1,7 +1,6 @@
 package ru.job4j.forum.control;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,53 +19,78 @@ import ru.job4j.forum.service.PostService;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Main controller for query of users processing
+ */
 @Controller
+@AllArgsConstructor
 public class IndexControl {
-
-    private static final Logger LOG = LogManager.getLogger(IndexControl.class.getName());
 
     private final PostService postService;
 
     private final CommentService commentService;
 
-    public IndexControl(PostService postService, CommentService commentService) {
-        this.postService = postService;
-        this.commentService = commentService;
-    }
+    private final AuthorizationService authorizationService;
 
+    /**
+     * Get method for processing index page
+     * @param model Model object
+     * @return String - name of view
+     */
     @GetMapping({"/", "/index"})
     public String index(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User buff = AuthorizationService.findUserByUsername(username);
+        User buff = authorizationService.findUserByUsername(username);
         model.addAttribute("user", buff);
         model.addAttribute("posts", postService.getAll());
         return "index";
     }
 
+    /**
+     * Get method for redirecting to create new post page
+     * @return String - create view
+     */
     @GetMapping("/create")
     public String create() {
         return "post/create";
     }
 
+    /**
+     * Post method for creating new post
+     * @param post - Post model
+     * @return redirecting
+     */
     @PostMapping("/save")
     public String save(@ModelAttribute Post post) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User buff = AuthorizationService.findUserByUsername(username);
+        User buff = authorizationService.findUserByUsername(username);
         post.setUser(buff);
-        postService.addPostToStore(post);
+        postService.addPost(post);
         return "redirect:/";
     }
 
+    /**
+     * Get method for updating post by post ID
+     * @param id - post ID
+     * @param model - Model object
+     * @return - post update view
+     */
     @GetMapping("/update")
     public String update(@RequestParam("id") int id, Model model) {
-        model.addAttribute("post", postService.findById(id));
+        model.addAttribute("post", postService.findPostById(id));
         return "post/update";
     }
 
+    /**
+     * Post method for creating comment to post
+     * @param comment - Comment object
+     * @param attributes - attributes for redirecting
+     * @return redirecting to post view
+     */
     @PostMapping("/comment/save")
     public String saveComment(@ModelAttribute Comment comment, RedirectAttributes attributes) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User buff = AuthorizationService.findUserByUsername(username);
+        User buff = authorizationService.findUserByUsername(username);
         comment.setUser(buff);
         comment.setCreated(Calendar.getInstance());
         commentService.save(comment);
@@ -74,14 +98,20 @@ public class IndexControl {
         return "redirect:/post";
     }
 
+    /**
+     * Get method for loading post by post ID
+     * @param id - post ID
+     * @param model - Model object
+     * @return post view
+     */
     @GetMapping("/post")
     public String loadPost(@RequestParam("id") String id, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User buff = AuthorizationService.findUserByUsername(username);
+        User buff = authorizationService.findUserByUsername(username);
         List<Comment> comments = commentService.findAllCommentsByPostId(Integer.parseInt(id));
         model.addAttribute("comments", comments);
         model.addAttribute("user", buff);
-        model.addAttribute("post", postService.findById(Integer.parseInt(id)));
+        model.addAttribute("post", postService.findPostById(Integer.parseInt(id)));
         return "post";
     }
 
